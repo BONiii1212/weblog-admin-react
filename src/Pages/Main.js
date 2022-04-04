@@ -8,7 +8,7 @@ function Main(){
         <Router>
             <Routes>
                 <Route path={"/login"} element={<Login/>}/>
-                <Route path={"/adminIndex"} element={<AdminIndex/>}/>
+                <Route path={"/index/*"} element={<AdminIndex/>}/>
             </Routes>
         </Router>
     )

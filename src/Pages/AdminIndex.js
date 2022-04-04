@@ -2,8 +2,12 @@ import { Layout, Menu, Breadcrumb} from 'antd';
 import {PieChartOutlined, DesktopOutlined,UserOutlined,TeamOutlined,FileOutlined} from '@ant-design/icons'
 import { useState } from 'react';
 import '../static/css/AdminIndex.css'
+import AddArticle from './AddArticle';
+import {Route,Routes} from "react-router-dom"
+
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
+
 
 const AdminIndex = function(){
     const [collapsed,setCollapsed] = useState()
@@ -50,7 +54,13 @@ const AdminIndex = function(){
               <Breadcrumb.Item>后台管理系统</Breadcrumb.Item>
               <Breadcrumb.Item>工作台</Breadcrumb.Item>
             </Breadcrumb>
-            <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>BONiii的博客管理系统</div>
+            <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
+              <div>
+                <Routes>
+                  <Route index element={<AddArticle />} />
+                </Routes>
+              </div>
+            </div>
           </Content>
           <Footer style={{ textAlign: 'center' }}></Footer>
         </Layout>
