@@ -3,7 +3,8 @@ import {PieChartOutlined, DesktopOutlined,UserOutlined,TeamOutlined,FileOutlined
 import { useState } from 'react';
 import '../static/css/AdminIndex.css'
 import AddArticle from './AddArticle';
-import {Route,Routes} from "react-router-dom"
+import {Route,Routes,Link} from "react-router-dom"
+import ArticleList from './ArticleList';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -27,7 +28,7 @@ const AdminIndex = function(){
             </Menu.Item>
             <Menu.Item key="2">
                 <DesktopOutlined />
-              <span>添加文章</span>
+              <span><Link to={"add"}></Link>添加文章</span>
             </Menu.Item>
             <SubMenu
               key="sub1"
@@ -38,8 +39,8 @@ const AdminIndex = function(){
                 </span>
               }
             >
-              <Menu.Item key="3">添加文章</Menu.Item>
-              <Menu.Item key="4">文章列表</Menu.Item>
+              <Menu.Item key="3"><Link to={"add"}>添加文章</Link></Menu.Item>
+              <Menu.Item key="4"><Link to={"list"}>文章列表</Link></Menu.Item>
             </SubMenu>
             <Menu.Item key="9">
                 <FileOutlined />
@@ -50,14 +51,17 @@ const AdminIndex = function(){
         <Layout>
           <Header style={{ background: '#fff', padding: 0 }} />
           <Content style={{ margin: '0 16px' }}>
-            <Breadcrumb style={{ margin: '16px 0' }}>
+            {/* <Breadcrumb style={{ margin: '16px 0' }}>
               <Breadcrumb.Item>后台管理系统</Breadcrumb.Item>
               <Breadcrumb.Item>工作台</Breadcrumb.Item>
-            </Breadcrumb>
+            </Breadcrumb> */}
             <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
               <div>
                 <Routes>
                   <Route index element={<AddArticle />} />
+                  <Route path={"/add"} element={<AddArticle/>}/>
+                  <Route path={"/add/:id"} element={<AddArticle/>}/>
+                  <Route path={"/list"} element={<ArticleList/>}/>
                 </Routes>
               </div>
             </div>

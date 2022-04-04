@@ -6,8 +6,6 @@ import Main from './Pages/Main';
 // const root = ReactDOM.createRoot(container);
 // root.render(<Main />);
 ReactDOM.render(
-    <React.StrictMode>
-        <Main />
-    </React.StrictMode>,
+        <Main />,
     document.getElementById("root")
   )

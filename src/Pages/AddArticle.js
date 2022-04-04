@@ -25,6 +25,9 @@ function AddArticle(){
     let navigate = useNavigate()
 
     useEffect(()=>{
+        getTypeInfo()
+    },[])
+    const getTypeInfo=()=>{
         axios({
             method:'get',
             url:servicePath.getTypeInfo,
@@ -40,8 +43,7 @@ function AddArticle(){
                 }
             }
         )
-    },[])
-
+    }
     const renderer = new marked.Renderer()
     marked.setOptions({
         renderer:renderer,
@@ -65,6 +67,37 @@ function AddArticle(){
     const selectTypeHandler = (value) => {
         setSelectType(value)
     }
+
+    useEffect(()=>{
+        getTypeInfo()
+        //获得文章ID
+        let tmpId = 7
+        if(tmpId){
+            setArticleId(tmpId)
+            getArticleById(tmpId)
+        } 
+    },[])
+
+    const getArticleById = (id)=>{
+        axios(servicePath.getArticleById+id,{ 
+            withCredentials: true,
+            header:{ 'Access-Control-Allow-Origin':'*' }
+        }).then(
+            res=>{
+                //let articleInfo= res.data.data[0]
+                setArticleTitle(res.data.data[0].title)
+                setArticleContent(res.data.data[0].article_content)
+                let html=marked(res.data.data[0].article_content)
+                setMarkdownContent(html)
+                setIntroducemd(res.data.data[0].introduce)
+                let tmpInt = marked(res.data.data[0].introduce)
+                setIntroducehtml(tmpInt)
+                setShowDate(res.data.data[0].addTime)
+                setSelectType(res.data.data[0].typeId)
+    
+            }
+        )
+    }    
     //直接使用Antd的Form组件来完成
     const saveArticle = ()=>{
         if(!selectedType){
@@ -122,7 +155,6 @@ function AddArticle(){
                 withCredentials: true
             }).then(
                 res=>{
-
                 if(res.data.isSuccess){
                     message.success('文章保存成功')
                 }else{
@@ -141,7 +173,7 @@ function AddArticle(){
                             <Input value={articleTitle} placeholder="博客标题" size="large" onChange={(e)=>{setArticleTitle(e.target.value)}}/>
                         </Col>
                         <Col span={4}>
-                            <Select onChange={selectTypeHandler} defaultValue={selectedType} size="large">
+                            <Select onChange={selectTypeHandler} value={selectedType} defaultValue={selectedType} size="large">
                                 {typeInfo.map(item=>{
                                     return(
                                         <Option key={item.id} value={item.id}>{item.typeName}</Option>
@@ -153,7 +185,7 @@ function AddArticle(){
                     <br/>
                     <Row gutter={10}>
                         <Col span={12}>
-                            <TextArea onChange={changeContent} className="markdown-content" rows={25} placeholder="文章内容" style={{resize:"none"}}/>
+                            <TextArea onChange={changeContent} className="markdown-content" rows={25} placeholder="文章内容" style={{resize:"none"}} value={articleContent}/>
                         </Col>
                         <Col span={12}>
                             <div className="show-html" dangerouslySetInnerHTML={{__html:markdownContent}}></div>
@@ -168,7 +200,7 @@ function AddArticle(){
                             <DatePicker onChange={(date,dateString)=>{setShowDate(dateString)}} placeholder="发布日期" size="large"/>
                         </Col>
                         <Col span={24}>
-                            <TextArea onChange={changeIntroduce} rows={4} placeholder="文章简介" style={{marginTop:"22px",resize:"none"}}></TextArea>
+                            <TextArea onChange={changeIntroduce} rows={4} placeholder="文章简介" style={{marginTop:"22px",resize:"none"}} value={introducemd}></TextArea>
                             <div className="introduce-html" dangerouslySetInnerHTML={{__html:introducehtml}}></div>
                         </Col>
                     </Row>
