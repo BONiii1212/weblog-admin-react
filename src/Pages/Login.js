@@ -7,6 +7,7 @@ import {UserOutlined, KeyOutlined, PropertySafetyFilled} from '@ant-design/icons
 import '../static/css/Login.css';
 import servicePath from '../config/apiUrl';
 import axios from 'axios';
+import { login } from '../utils/auth-token';
 
 function Login(){
     const [userName , setUserName] = useState('')
@@ -34,15 +35,22 @@ function Login(){
             'userName':userName,
             'password':password
         }
-        axios({
-            method:'post',
-            url:servicePath.checkLogin,
-            data:dataProps,
-            withCredentials:true //共享session
-        }).then(res=>{
-            setIsLoading(false)
-            if(res.data.data=='登录成功'){
-                localStorage.setItem('openId',res.data.openId)
+        // axios({
+        //     method:'post',
+        //     url:servicePath.checkLogin,
+        //     data:dataProps,
+        //     withCredentials:true //共享session
+        // }).then(res=>{
+        //     setIsLoading(false)
+        //     if(res.data.data=='登录成功'){
+        //         localStorage.setItem('openId',res.data.openId)
+        //         navigate("/index", { replace: true });
+        //     }else{
+        //         message.error('用户名密码错误')
+        //     }
+        // })
+        login(dataProps).then(res=>{
+            if(res.status=='success'){
                 navigate("/index", { replace: true });
             }else{
                 message.error('用户名密码错误')
