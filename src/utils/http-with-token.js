@@ -1,4 +1,4 @@
-import * as auth from "./auth-token"
+import * as auth from "./auth-provider"
 
 //http封装
 export const http = async(url,token,customConfig)=>{

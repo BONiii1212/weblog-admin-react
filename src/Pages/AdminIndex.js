@@ -36,10 +36,10 @@ const AdminIndex = function(){
                 </span>
               }
             >
-              <Menu.Item key="3"><Link to={"add"}>添加文章</Link></Menu.Item>
-              <Menu.Item key="4"><Link to={"list"}>文章列表</Link></Menu.Item>
+              <Menu.Item key="2"><Link to={"add"}>添加文章</Link></Menu.Item>
+              <Menu.Item key="3"><Link to={"list"}>文章列表</Link></Menu.Item>
             </SubMenu>
-            <Menu.Item key="9">
+            <Menu.Item key="4">
                 <FileOutlined />
               <span>留言管理</span>
             </Menu.Item>

@@ -3,22 +3,15 @@ import 'antd/dist/antd.css';
 import {useNavigate} from "react-router-dom";
 import { Card,Spin,message,Form,Input, Button } from 'antd';
 import '../static/css/Login.css';
-import { login } from '../utils/auth-token';
+import { useAuth } from '../context/auth-context';
 
 function Login(){
     const [isLoading, setIsLoading] = useState(false)
-    let navigate = useNavigate()
+    const {user,login} = useAuth()
 
     const checkLogin = (data)=>{
         setIsLoading(true)
-        login(data).then(res=>{
-            setIsLoading(false)
-            if(res.status=='success'){
-                navigate("/index", { replace: true });
-            }else{
-                message.error('登录失败！用户名密码错误')
-            }
-        })
+        login(data).then(res=>setIsLoading(false))
     }
 
     return(

@@ -20,7 +20,7 @@ function AddArticle(){
     const [introducemd,setIntroducemd] = useState()            //简介的markdown内容
     const [introducehtml,setIntroducehtml] = useState('等待编辑') //简介的html内容
     const [showDate,setShowDate] = useState()   //发布日期
-    const [selectedType,setSelectType] = useState('类型') //选择的文章类别
+    const [selectedType,setSelectType] = useState('文章类型') //选择的文章类别
     
     let navigate = useNavigate()
 
@@ -176,7 +176,6 @@ function AddArticle(){
                 <Col span={6}>
                     <Row>
                         <Col span={24}>
-                            <Button size="large" style={{marginRight:"5px"}} >暂存文章</Button>
                             <Button type="primary" size="large" style={{marginRight:"5px"}} onClick={saveArticle}>发布文章</Button>
                             <DatePicker onChange={(date,dateString)=>{setShowDate(dateString)}} placeholder="发布日期" size="large"/>
                         </Col>

@@ -8,5 +8,6 @@ const servicePath = {
     getArticleList : ipUrl + 'getArticleList', //搜索文章列表
     delArticle : ipUrl + 'delArticle/' ,  //  删除文章
     getArticleById : ipUrl + 'getArticleById/' ,  //  根据ID获得文章详情
+    getUserState : ipUrl + 'getUserState' //用于激活用户状态
 }
 export default servicePath

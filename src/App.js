@@ -1,10 +1,14 @@
 import React from "react";
-import {Button} from 'antd'
 import 'antd/dist/antd.css'
+import { useAuth } from "./context/auth-context";
+import Login from "./Pages/Login";
+import Main from "./Pages/Main";
 
 function App() {
+  const {user} = useAuth()
   return (
     <div className="App">
+      {user?<Main/>:<Login/>}
     </div>
   );
 }
