@@ -1,59 +1,22 @@
 import React , {useState} from 'react';
 import 'antd/dist/antd.css';
 import {useNavigate} from "react-router-dom";
-import AdminIndex from "./AdminIndex";
-import { Card, Input, Button ,Spin,message } from 'antd';
-import {UserOutlined, KeyOutlined, PropertySafetyFilled} from '@ant-design/icons'
+import { Card,Spin,message,Form,Input, Button } from 'antd';
 import '../static/css/Login.css';
-import servicePath from '../config/apiUrl';
-import axios from 'axios';
 import { login } from '../utils/auth-token';
 
 function Login(){
-    const [userName , setUserName] = useState('')
-    const [password , setPassword] = useState('')
     const [isLoading, setIsLoading] = useState(false)
-
     let navigate = useNavigate()
 
-    const checkLogin = ()=>{
+    const checkLogin = (data)=>{
         setIsLoading(true)
-        if(!userName){
-            message.error('用户名不能为空')
-            setTimeout(()=>{
-                setIsLoading(false)
-            })
-            return false
-        }else if(!password){
-            message.error('密码不能为空')
-            setTimeout(()=>{
-                setIsLoading(false)
-            })
-            return false
-        }
-        let dataProps = {
-            'userName':userName,
-            'password':password
-        }
-        // axios({
-        //     method:'post',
-        //     url:servicePath.checkLogin,
-        //     data:dataProps,
-        //     withCredentials:true //共享session
-        // }).then(res=>{
-        //     setIsLoading(false)
-        //     if(res.data.data=='登录成功'){
-        //         localStorage.setItem('openId',res.data.openId)
-        //         navigate("/index", { replace: true });
-        //     }else{
-        //         message.error('用户名密码错误')
-        //     }
-        // })
-        login(dataProps).then(res=>{
+        login(data).then(res=>{
+            setIsLoading(false)
             if(res.status=='success'){
                 navigate("/index", { replace: true });
             }else{
-                message.error('用户名密码错误')
+                message.error('登录失败！用户名密码错误')
             }
         })
     }
@@ -62,23 +25,17 @@ function Login(){
         <div className="login-div">
             <Spin tip="Loading..." spinning={isLoading}>
                 <Card title="BONiii Blog  System" bordered={true} style={{ width: 400 }} >
-                    <Input
-                        id="userName"
-                        size="large"
-                        placeholder="Enter your userName"
-                        prefix={<UserOutlined style={{color:'rgba(0,0,0,.25)'}} />}
-                        onChange={(e)=>{setUserName(e.target.value)}}
-                    /> 
-                    <br/><br/>
-                    <Input.Password
-                        id="password"
-                        size="large"
-                        placeholder="Enter your password"
-                        prefix={<KeyOutlined style={{color:'rgba(0,0,0,.25)'}} />}
-                        onChange={(e)=>{setPassword(e.target.value)}}
-                    />     
-                    <br/><br/>
-                    <Button type="primary" size="large" block onClick={checkLogin} > Login in </Button>
+                    <Form onFinish={checkLogin}>
+                        <Form.Item name={"username"} rules={[{required:true ,message:"请输入用户名"}]}>
+                            <Input placeholder={"用户名"} type="text" id={"username"}></Input>
+                        </Form.Item>
+                        <Form.Item name={"password"} rules={[{required:true,message:"请输入密码"}]}>
+                            <Input placeholder={"密码"} type="password" id={"password"}></Input>
+                        </Form.Item>
+                        <Form.Item>
+                            <Button htmlType={"submit"} type={"primary"}>登录</Button>
+                        </Form.Item>
+                    </Form>
                 </Card>
             </Spin>
         </div>

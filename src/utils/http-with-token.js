@@ -1,4 +1,3 @@
-import { response } from "express"
 import * as auth from "./auth-token"
 
 //http封装
@@ -8,12 +7,15 @@ export const http = async(url,token,customConfig)=>{
         headers: {
             Authorization: token ? `Bearer ${token}` : "",
             "Content-Type": customConfig.data ? "application/json" : "",
+            'Access-Control-Allow-Origin':'*',
+            withCredentials:true
         },
         ...customConfig,
     }
     return window.fetch(url,config)
     .then(async (response)=>{
         if(response.status==401){ //token失效
+            console.log('token失效')
             await auth.logout()
             window.location.reload()
             return Promise.reject({mess:"请重新登录"})
@@ -31,5 +33,5 @@ export const http = async(url,token,customConfig)=>{
 export const useHttp =()=>{
     //获取token
     const token = auth.getToken()
-    return (url,customConfig)=>http(url,token,customConfig)
+    return (url,customConfig={})=>http(url,token,customConfig)
 }

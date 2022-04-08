@@ -4,13 +4,13 @@ import axios from "axios";
 import servicePath from "../config/apiUrl";
 import '../static/css/ArticleList.css'
 import {useNavigate} from "react-router-dom";
+import { useDelArticle } from "../utils/article";
 
 const { confirm } = Modal;
 
 //可以更换
 function ArticleList(props){
     const [list,setList]=useState([])
-
     let navigate = useNavigate()
 
     const getList = ()=>{

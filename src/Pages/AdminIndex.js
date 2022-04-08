@@ -1,10 +1,11 @@
-import { Layout, Menu, Breadcrumb} from 'antd';
+import { Layout, Menu} from 'antd';
 import {PieChartOutlined, DesktopOutlined,UserOutlined,TeamOutlined,FileOutlined} from '@ant-design/icons'
 import { useState } from 'react';
 import '../static/css/AdminIndex.css'
 import AddArticle from './AddArticle';
 import {Route,Routes,Link} from "react-router-dom"
 import ArticleList from './ArticleList';
+import Visualization from './Visualization';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -24,11 +25,7 @@ const AdminIndex = function(){
           <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
             <Menu.Item key="1">
               <PieChartOutlined />
-              <span>工作台</span>
-            </Menu.Item>
-            <Menu.Item key="2">
-                <DesktopOutlined />
-              <span><Link to={"add"}></Link>添加文章</span>
+              <span><Link to={"/index"}></Link>数据可视化</span>
             </Menu.Item>
             <SubMenu
               key="sub1"
@@ -51,14 +48,10 @@ const AdminIndex = function(){
         <Layout>
           <Header style={{ background: '#fff', padding: 0 }} />
           <Content style={{ margin: '0 16px' }}>
-            {/* <Breadcrumb style={{ margin: '16px 0' }}>
-              <Breadcrumb.Item>后台管理系统</Breadcrumb.Item>
-              <Breadcrumb.Item>工作台</Breadcrumb.Item>
-            </Breadcrumb> */}
             <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
               <div>
                 <Routes>
-                  <Route index element={<AddArticle />} />
+                  <Route index element={<Visualization />} />
                   <Route path={"/add"} element={<AddArticle/>}/>
                   <Route path={"/add/:id"} element={<AddArticle/>}/>
                   <Route path={"/list"} element={<ArticleList/>}/>

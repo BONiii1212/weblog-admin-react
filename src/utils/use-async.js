@@ -9,7 +9,7 @@ export const useAsync = ()=>{
     //赋值更改状态
     const setData = (data)=>{
         setState({
-            state:"success",
+            stat:"success",
             data:data,
             error:null,
         })
@@ -17,18 +17,18 @@ export const useAsync = ()=>{
     //报错时更改状态
     const setError = (error)=>{
         setState({
-            state:"error",
+            stat:"error",
             data:null,
             error:error
         })
     }
     //用于执行异步请求，管理状态
     const run = (requestPromise)=>{
-        if(!requestPromise.then){
+        if(!(requestPromise instanceof Promise)){
             throw new Error("请传入Promise类型的数据")
         }
         setState({...state,stat:"loading"}) //loading
-        return Promise.then((data)=>{
+        return requestPromise.then((data)=>{
             setData(data)                   //success
             return data
         }).catch((error)=>{
