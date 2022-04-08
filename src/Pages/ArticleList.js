@@ -1,31 +1,23 @@
 import React,{useState,useEffect} from "react";
-import { List, Row, Col, Modal, message,Button } from "antd";
+import { Modal, message,Button, Table} from "antd";
 import axios from "axios";
 import servicePath from "../config/apiUrl";
 import '../static/css/ArticleList.css'
 import {useNavigate} from "react-router-dom";
-import { useDelArticle } from "../utils/article";
+import Column from "antd/lib/table/Column";
+import { useDelArticle, useGetArticleList } from "../utils/article";
 
 const { confirm } = Modal;
 
-//可以更换
-function ArticleList(props){
+const ArticleList = () => {
+
     const [list,setList]=useState([])
     let navigate = useNavigate()
-
-    const getList = ()=>{
-        axios({
-            method:'get',
-            url: servicePath.getArticleList,
-            header:{ 'Access-Control-Allow-Origin':'*' },
-            withCredentials: true
-        }).then(res=>{
-            setList(res.data.list)
-        })
-    }
+    const {getList} = useGetArticleList()
+    const {del} = useDelArticle()
 
     useEffect(()=>{
-        getList()
+        getList().then(res=>setList(res))
     },[])
 
     const delArticle = (id)=>{
@@ -33,12 +25,8 @@ function ArticleList(props){
             title: '确定要删除这篇博客文章吗?',
             content: '如果你点击OK按钮，文章将会永远被删除，无法恢复。',
             onOk() {
-                axios(servicePath.delArticle+id,{ withCredentials: true}).then(
-                    res=>{ 
-                        message.success('文章删除成功')
-                        getList()
-                        }
-                    )
+                del(id).then(res=>{ message.success('文章删除成功');
+                getList().then(res=>setList(res))})
             },
             onCancel() {
                 message.success('没有任何改变')
@@ -49,36 +37,20 @@ function ArticleList(props){
         navigate(`/index/add/${id}`);
     }
     return (
-        <div>
-             <List
-                header={
-                    <Row className="list-div">
-                        <Col span={9}><b>标题</b></Col>
-                        <Col span={3}><b>类别</b></Col>
-                        <Col span={3}><b>发布时间</b></Col>
-                        <Col span={4}><b>浏览量</b></Col>
-                        <Col span={5}><b>操作</b></Col>
-                    </Row>
-                }
-                bordered
-                dataSource={list}
-                renderItem={item => (
-                    <List.Item>
-                        <Row className="list-div">
-                            <Col span={9}>{item.title}</Col>
-                            <Col span={3}>{item.typeName}</Col>
-                            <Col span={3}>{item.addTime}</Col>
-                            <Col span={4}>{item.view_count}</Col>
-                            <Col span={5}>
-                              <Button type="primary" onClick={()=>updateArticle(item.id)}>修改</Button>&nbsp;
-                              <Button onClick={()=>delArticle(item.id)}>删除 </Button>
-                            </Col>
-                        </Row>
-                    </List.Item>
+        <Table dataSource={list} rowKey={"id"}>
+            <Column title="标题" dataIndex="title" key="title"/>
+            <Column title="类别" dataIndex="typeName" key="typeName"/>
+            <Column title="发布时间" dataIndex="addTime" key="addTime"/>
+            <Column title="操作" key="action" 
+                //当前行的值，数据和索引
+                render={(value,record,index)=>(
+                    <div>
+                        <Button type="primary" onClick={()=>updateArticle(record.id)} style={{marginRight:"10px"}}>修改</Button>
+                        <Button type="primary" danger onClick={()=>delArticle(record.id)}>删除 </Button>
+                    </div>    
                 )}
-                />
-
-        </div>
+            />
+        </Table>
     )
 }
 

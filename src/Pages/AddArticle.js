@@ -12,7 +12,7 @@ const {TextArea} = Input
 
 //缺少html显示换行
 function AddArticle(){
-    const {data:typeInfo} = useGetTypeInfo() //文章类型
+    const {data:typeInfo} = useGetTypeInfo() // 获取下拉栏中所有的文章类型
     const [articleId,setArticleId] = useState(0)  // 文章的ID，如果是0说明是新增加，如果不是0，说明是修改
     const [articleTitle,setArticleTitle] = useState('')   //文章标题
     const [articleContent , setArticleContent] = useState('')  //markdown的编辑内容
