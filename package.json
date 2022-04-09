@@ -10,6 +10,7 @@
     "antd": "^4.19.5",
     "axios": "^0.26.1",
     "marked": "^4.0.12",
+    "monent": "^0.0.2-security",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router": "^6.3.0",

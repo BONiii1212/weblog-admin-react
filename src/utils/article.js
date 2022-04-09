@@ -52,3 +52,13 @@ export const useUpdateArticle = () => {
     }
     return {update, ...result}
 }
+
+//通过id获取文章详情，用于修改文章
+export const useGetArticleById = () => {
+    const {run, ...result} = useAsync()
+    const httpWithToken = useHttp()
+    const getArticleDetails = (id) =>{
+        return run(httpWithToken(servicePath.getArticleById+id))
+    } 
+    return {getArticleDetails, ...result}
+}

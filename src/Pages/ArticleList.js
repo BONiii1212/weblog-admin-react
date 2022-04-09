@@ -1,7 +1,5 @@
 import React,{useState,useEffect} from "react";
 import { Modal, message,Button, Table} from "antd";
-import axios from "axios";
-import servicePath from "../config/apiUrl";
 import '../static/css/ArticleList.css'
 import {useNavigate} from "react-router-dom";
 import Column from "antd/lib/table/Column";
@@ -35,7 +33,7 @@ const ArticleList = () => {
     }
 
     const updateArticle = (id,checked)=>{
-        navigate(`/index/add/${id}`);
+        navigate(`/index/add?id=${id}`);
     }
     
     return (
