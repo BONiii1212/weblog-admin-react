@@ -2,8 +2,6 @@ import React,{useState} from "react";
 import { marked } from "marked";
 import '../static/css/AddArticle.css'
 import {Input,Select,Button,DatePicker,message,Form} from 'antd'
-import axios from "axios";
-import servicePath from '../config/apiUrl'
 import { useAddArticle, useGetTypeInfo, useUpdateArticle } from "../utils/article";
 
 const {Option} = Select
