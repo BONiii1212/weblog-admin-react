@@ -7,7 +7,7 @@ import { useAuth } from '../context/auth-context';
 
 function Login(){
     const [isLoading, setIsLoading] = useState(false)
-    const {user,login} = useAuth()
+    const {login} = useAuth()
 
     const checkLogin = (data)=>{
         setIsLoading(true)

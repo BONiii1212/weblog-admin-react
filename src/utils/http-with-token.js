@@ -6,7 +6,7 @@ export const http = async(url,token,customConfig)=>{
         method:"GET",
         headers: {
             Authorization: token ? `Bearer ${token}` : "",
-            "Content-Type": customConfig.data ? "application/json" : "",
+            "Content-Type": customConfig.body ? "application/json" : "",
             'Access-Control-Allow-Origin':'*',
             withCredentials:true
         },

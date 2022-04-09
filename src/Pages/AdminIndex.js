@@ -10,7 +10,6 @@ import Visualization from './Visualization';
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
-
 const AdminIndex = function(){
     const [collapsed,setCollapsed] = useState()
 
@@ -24,25 +23,13 @@ const AdminIndex = function(){
           <div className="logo" />
           <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
             <Menu.Item key="1">
-              <PieChartOutlined />
-              <span><Link to={"/index"}></Link>数据可视化</span>
+              <PieChartOutlined /><span><Link to={"/index"}></Link>数据可视化</span>
             </Menu.Item>
-            <SubMenu
-              key="sub1"
-              title={
-                <span>
-                  <UserOutlined />
-                  <span>文章管理</span>
-                </span>
-              }
-            >
+            <SubMenu key="sub1" title={<span><UserOutlined /><span>文章管理</span></span>}>
               <Menu.Item key="2"><Link to={"add"}>添加文章</Link></Menu.Item>
               <Menu.Item key="3"><Link to={"list"}>文章列表</Link></Menu.Item>
             </SubMenu>
-            <Menu.Item key="4">
-                <FileOutlined />
-              <span>留言管理</span>
-            </Menu.Item>
+            <Menu.Item key="4"><FileOutlined /><span>留言管理</span></Menu.Item>
           </Menu>
         </Sider>
         <Layout>

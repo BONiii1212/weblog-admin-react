@@ -32,3 +32,23 @@ export const useDelArticle=()=>{
     }
     return {del, ...result}
 }
+
+//添加文章
+export const useAddArticle = () => {
+    const {run, ...result} = useAsync()
+    const httpWithToken = useHttp()
+    const add = (data)=>{
+        return run(httpWithToken(servicePath.addArticle,{method:'POST',body:JSON.stringify(data)}))
+    }
+    return {add, ...result}
+}
+
+//更新文章
+export const useUpdateArticle = () => {
+    const {run, ...result} = useAsync()
+    const httpWithToken = useHttp()
+    const update = (data) =>{
+        return run(httpWithToken(servicePath.updateArticle,{method:'POST',body:JSON.stringify(data)}))
+    }
+    return {update, ...result}
+}

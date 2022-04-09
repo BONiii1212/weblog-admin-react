@@ -33,9 +33,11 @@ const ArticleList = () => {
             },
          });
     }
+
     const updateArticle = (id,checked)=>{
         navigate(`/index/add/${id}`);
     }
+    
     return (
         <Table dataSource={list} rowKey={"id"}>
             <Column title="标题" dataIndex="title" key="title"/>
