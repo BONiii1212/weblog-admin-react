@@ -1,27 +1,28 @@
 import { Layout, Menu} from 'antd';
 import {PieChartOutlined, DesktopOutlined,UserOutlined,TeamOutlined,FileOutlined} from '@ant-design/icons'
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import '../static/css/AdminIndex.css'
 import AddArticle from './AddArticle';
 import {Route,Routes,Link} from "react-router-dom"
 import ArticleList from './ArticleList';
 import Visualization from './Visualization';
+import { useMenu } from '../context/menu-context';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
 const AdminIndex = function(){
+    const {openKeys,selectedKeys,changeOpen,changeSelect} = useMenu()
     const [collapsed,setCollapsed] = useState()
 
     const onCollapse = (collapsed)=>{
         setCollapsed(collapsed)
     }
-
     return(
         <Layout style={{ minHeight: '100vh' }}>
         <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
           <div className="logo" />
-          <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+          <Menu theme="dark" onOpenChange={(value)=>changeOpen(value)} onSelect={(obj)=>changeSelect(obj.selectedKeys)} openKeys={openKeys} selectedKeys={selectedKeys} mode="inline">
             <Menu.Item key="1">
               <PieChartOutlined /><span><Link to={"/index"}></Link>数据可视化</span>
             </Menu.Item>
@@ -34,7 +35,7 @@ const AdminIndex = function(){
         </Sider>
         <Layout>
           <Header style={{ background: '#fff', padding: 0 }} />
-          <Content style={{ margin: '0 16px' }}>
+          <Content style={{ margin: '16px' }}>
             <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
               <div>
                 <Routes>

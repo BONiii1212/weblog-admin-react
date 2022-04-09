@@ -1,22 +1,25 @@
-import React,{useEffect, useState,useRef} from "react";
+import React,{useEffect, useState} from "react";
 import { marked } from "marked";
 import '../static/css/AddArticle.css'
 import {useNavigate} from "react-router-dom";
-import {Input,Select,Button,DatePicker,message,Form} from 'antd'
+import {EditOutlined,FileTextOutlined} from "@ant-design/icons"
+import {Row,Col,Input,Select,Button,DatePicker,message,Form,Tabs} from 'antd'
 import { useAddArticle, useGetArticleById, useGetTypeInfo, useUpdateArticle } from "../utils/article";
 import { useUrlQueryParam } from "../utils/useUrlQueryParam";
 import { useForm } from "antd/es/form/Form";
 import moment from "moment"
+import { useMenu } from "../context/menu-context";
 
 const {Option} = Select
 const {TextArea} = Input
+const {TabPane} = Tabs
 
 //缺少html显示换行
 function AddArticle(){
     const {data:typeInfo} = useGetTypeInfo() // 获取下拉栏中所有的文章类型
     const [params,setParams] = useUrlQueryParam(["id"])  // 文章的ID
-    const [markdownContent, setMarkdownContent] = useState('预览内容') //html内容
-    const [introducehtml,setIntroducehtml] = useState('等待编辑') //简介的html内容
+    const [markdownContent, setMarkdownContent] = useState("") //html内容
+    const [introducehtml,setIntroducehtml] = useState("") //简介的html内容
     const [articleDetails,setArticleDetails] = useState({
         title:'',
         introduce:'',
@@ -26,6 +29,7 @@ function AddArticle(){
     })
     let navigate = useNavigate()
     const [form] = useForm() //用于重置表格
+    const {openKeys,selectedKeys,changeOpen,changeSelect} = useMenu()
     const {add} = useAddArticle()
     const {update} = useUpdateArticle()
     const {getArticleDetails} = useGetArticleById()
@@ -40,6 +44,14 @@ function AddArticle(){
         smartLists:true,
         smartypants:false,
     })
+
+    //修改Menu的状态
+    useEffect(()=>{
+        if(params.id==''){
+            changeOpen(['sub1'])
+            changeSelect(['2'])
+        }
+    },[changeOpen,changeSelect])
 
     //表单数据变动
     const formDataChange = (data) => {
@@ -98,36 +110,56 @@ function AddArticle(){
     }
     return(
         <Form form={form} onValuesChange={formDataChange} onFinish={params.id==''?addArticle:updateArticle}>
-            <Form.Item label="文章标题" name="title" rules={[{required:true,message:'请输入文章标题'}]}>
-                <Input placeholder="请输入文章标题" />
-            </Form.Item>
-            <Form.Item label="文章类型" name="type_id" initialValue='文章类型'>
-                <Select>
-                    {typeInfo?.map(item=>{
-                        return(<Option key={item.id} value={item.id}>{item.typeName}</Option>)
-                    })}
-                </Select>
-            </Form.Item>
-            <Form.Item label="发布时间" name="addTime" rules={[{required:true,message:'请选择发布时间'}]}>
-                <DatePicker placeholder="请选择日期"/>
-            </Form.Item>
-            <Form.Item>
-                {params.id==''?
-                <Button type="primary" htmlType="submit">发布文章</Button>
-                :<Button type="primary" danger htmlType="submit">修改文章</Button>}
-            </Form.Item>
-            <Form.Item name="article_content" rules={[{required:true,message:'请输入文章内容'}]}>
-                <TextArea className="markdown-content" rows={25} placeholder="文章内容"/>
-            </Form.Item>
-            <Form.Item>
-                <div className="show-html" dangerouslySetInnerHTML={{__html:markdownContent}}></div>
-            </Form.Item>
-            <Form.Item name="introduce" rules={[{required:true,message:'请输入文章简介'}]}>
-                <TextArea rows={4} placeholder="文章简介" ></TextArea>   
-            </Form.Item>
-            <Form.Item>
-                <div className="introduce-html" dangerouslySetInnerHTML={{__html:introducehtml}}></div>
-            </Form.Item>
+            <Row gutter={24}>
+                <Col span={12}>
+                    <Form.Item label="文章标题" name="title" rules={[{required:true,message:'请输入文章标题'}]}>
+                        <Input placeholder="请输入文章标题" />
+                    </Form.Item>
+                    <Form.Item label="文章类型" name="type_id" initialValue='文章类型'>
+                        <Select>
+                            {typeInfo?.map(item=>{
+                                return(<Option key={item.id} value={item.id}>{item.typeName}</Option>)
+                            })}
+                        </Select>
+                    </Form.Item>
+                    <Form.Item label="发布时间" name="addTime" rules={[{required:true,message:'请选择发布时间'}]}>
+                        <DatePicker placeholder="请选择日期"/>
+                    </Form.Item>
+                    <Form.Item>
+                        <div style={{display:"flex", justifyContent:"center"}}>
+                            {params.id==''?
+                            <Button type="primary" htmlType="submit">发布文章</Button>
+                            :<Button type="primary" danger htmlType="submit">修改文章</Button>}
+                        </div>
+                    </Form.Item>                
+                </Col>
+                <Col span={12}>
+                    <Tabs defaultActiveKey="1" centered tabPosition="right">
+                        <TabPane tab={<span><EditOutlined/>编辑</span>} key="1">
+                            <Form.Item name="introduce" rules={[{required:true,message:'请输入文章简介'}]}>
+                                <TextArea style={{resize:"none",height:"190px",borderRadius:"5px"}} placeholder="文章简介" ></TextArea>   
+                            </Form.Item>
+                        </TabPane>
+                        <TabPane tab={<span><FileTextOutlined/>预览</span>} key="2">
+                            <Form.Item>
+                                <div className="introduce-html" dangerouslySetInnerHTML={{__html:introducehtml}}></div>
+                            </Form.Item>
+                        </TabPane>
+                    </Tabs>
+                </Col>
+            </Row>
+                <Tabs defaultActiveKey="1" centered>
+                    <TabPane tab={<span><EditOutlined/>编辑</span>} key="1">
+                        <Form.Item name="article_content" rules={[{required:true,message:'请输入文章内容'}]}>
+                            <TextArea className="markdown-content" rows={25} placeholder="文章内容"/>
+                        </Form.Item> 
+                    </TabPane>
+                    <TabPane tab={<span><FileTextOutlined/>预览</span>} key="2">
+                        <Form.Item>
+                            <div className="show-html" dangerouslySetInnerHTML={{__html:markdownContent}}></div>
+                        </Form.Item>   
+                    </TabPane>        
+                </Tabs>           
         </Form>
     )
 }

@@ -4,6 +4,7 @@ import '../static/css/ArticleList.css'
 import {useNavigate} from "react-router-dom";
 import Column from "antd/lib/table/Column";
 import { useDelArticle, useGetArticleList } from "../utils/article";
+import { useMenu } from "../context/menu-context"
 
 const { confirm } = Modal;
 
@@ -13,6 +14,12 @@ const ArticleList = () => {
     let navigate = useNavigate()
     const {getList} = useGetArticleList()
     const {del} = useDelArticle()
+    const {openKeys,selectedKeys,changeOpen,changeSelect} = useMenu()
+
+    useEffect(()=>{
+        changeOpen(['sub1'])
+        changeSelect(['3'])
+    },[])
 
     useEffect(()=>{
         getList().then(res=>setList(res))

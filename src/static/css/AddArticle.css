@@ -1,15 +1,16 @@
 .markdown-content{
     font-size:16px !important;
     max-height: 745px;
+    border-radius: 5px;
+    resize: none;
 }
 .show-html{
-    padding:10px;
+    padding: 4px 11px;
     border:1px solid #ddd;
-    border-radius: 5px;
     font-size:16px;
     height: 639px;
     background-color: #f0f0f0;
-    overflow: auto;
+    overflow-y: scroll
 }
 
 .show-html h1{
@@ -47,12 +48,13 @@
     background-color: #f8f8f8;
 }
 .introduce-html{
-    padding:10px;
     border:1px solid #ddd;
+    padding: 4px 11px;
     border-radius: 5px;
-    font-size:16px;
-
+    font-size:14px;
+    height:190px;
     background-color: #f0f0f0;
+    overflow: auto;
 }
 
 
@@ -95,4 +97,13 @@
 }
 label.ant-form-item-required::before{
     display: none !important
+}
+.ant-tabs-content-holder .ant-tabs-content .ant-tabs-tabpane{
+    padding-right: 0px !important;
+}
+.ant-tabs-top .ant-tabs-nav{
+    margin: 0 !important;
+}
+.ant-tabs-tabpane .ant-form-item{
+    margin-bottom: 0px !important;
 }

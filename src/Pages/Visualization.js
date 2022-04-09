@@ -1,11 +1,17 @@
 import { useAuth } from "../context/auth-context"
-import { useUrlQueryParam } from "../utils/useUrlQueryParam"
-import { useRef } from "react"
+import { useEffect} from "react"
+import { useMenu } from "../context/menu-context"
+
 export default function Visualization(){
     const {user,login,logout} = useAuth()
-    console.log(user)
+    const {openKeys,selectedKeys,changeOpen,changeSelect} = useMenu()
+    
+    useEffect(()=>{
+        changeOpen([])
+        changeSelect(['1'])
+    },[])
     return(
-        <div>这里是数据可视化
+        <div>这里是数据可视化界面
         </div>
     )
 }
