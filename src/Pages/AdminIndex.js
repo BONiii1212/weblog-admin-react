@@ -7,6 +7,7 @@ import {Route,Routes,Link} from "react-router-dom"
 import ArticleList from './ArticleList';
 import Visualization from './Visualization';
 import { useMenu } from '../context/menu-context';
+import { useDocumentTile } from '../utils/title';
 
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
@@ -14,7 +15,7 @@ const { SubMenu } = Menu;
 const AdminIndex = function(){
     const {openKeys,selectedKeys,changeOpen,changeSelect} = useMenu()
     const [collapsed,setCollapsed] = useState()
-
+    useDocumentTile('首页',true)
     const onCollapse = (collapsed)=>{
         setCollapsed(collapsed)
     }

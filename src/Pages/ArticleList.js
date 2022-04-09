@@ -5,6 +5,7 @@ import {useNavigate} from "react-router-dom";
 import Column from "antd/lib/table/Column";
 import { useDelArticle, useGetArticleList } from "../utils/article";
 import { useMenu } from "../context/menu-context"
+import { useDocumentTile } from "../utils/title";
 
 const { confirm } = Modal;
 
@@ -12,10 +13,10 @@ const ArticleList = () => {
 
     const [list,setList]=useState([])
     let navigate = useNavigate()
-    const {getList} = useGetArticleList()
-    const {del} = useDelArticle()
+    const {getList,isLoading:getIsLoading} = useGetArticleList()
+    const {del,isLoading:delIsLoading} = useDelArticle()
     const {openKeys,selectedKeys,changeOpen,changeSelect} = useMenu()
-
+    useDocumentTile('文章列表',false)
     useEffect(()=>{
         changeOpen(['sub1'])
         changeSelect(['3'])
@@ -44,7 +45,7 @@ const ArticleList = () => {
     }
     
     return (
-        <Table dataSource={list} rowKey={"id"}>
+        <Table dataSource={list} rowKey={"id"} isLoading={delIsLoading||getIsLoading}>
             <Column title="标题" dataIndex="title" key="title"/>
             <Column title="类别" dataIndex="typeName" key="typeName"/>
             <Column title="发布时间" dataIndex="addTime" key="addTime"/>
@@ -57,7 +58,7 @@ const ArticleList = () => {
                     </div>    
                 )}
             />
-        </Table>
+        </Table>  
     )
 }
 
