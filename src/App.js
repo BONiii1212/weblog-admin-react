@@ -6,12 +6,10 @@ import Main from "./Pages/Main";
 import { Spin } from "antd";
 
 function App() {
-  const {user,isLoading} = useAuth()
+  const {user} = useAuth()
   return (
     <div className="App">
-      <Spin tip="登录认证中，请稍等..." spinning={isLoading}>
-        {user?<Main/>:<Login/>}
-      </Spin>
+      {user?<Main/>:<Login/>}
     </div>
   );
 }

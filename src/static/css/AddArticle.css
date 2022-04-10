@@ -27,20 +27,26 @@
 
 .show-html pre{
     display: block;
-    background-color: #f0f0f0;
+    background-color:#f3f3f3;
+    font-weight: 300;
+    font-family: Menlo, monospace;
     padding: 5px;
     border-radius: 5px;
 }
 .show-html pre>code{
-    color: #000;
-    background-color: #f0f0f0;
+    width: 100%;
+    border:0px !important;
+    background-color: #283646 !important;
+    color:#FFF;
 }
 .show-html code {
-    background-color: #fff5f5;
+    display: inline-block ;
+    background-color:#f3f3f3;
+    border:1px solid #fdb9cc;
     padding: 5px 10px;
     border-radius: 5px;
     margin: 0px 3px; 
-    color: #ff502c; 
+    color:#4f4f4f;
 }
 .show-html blockquote{
     border-left:4px solid #cbcbcb ;

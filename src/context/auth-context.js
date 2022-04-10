@@ -3,6 +3,7 @@ import * as auth from "../utils/auth-provider"
 import { http } from "../utils/http-with-token"
 import servicePath from "../config/apiUrl"
 import React, { useEffect } from "react"
+import { FullPageLoading,FullPageErrorFallback } from "../components/lib"
 
 const AuthContext = React.createContext() //创建容器
 AuthContext.displayName = "AuthContext"
@@ -37,10 +38,18 @@ export const AuthProvider = ({children}) => {
         run(restoreUserState())
     },[])
     
+    if(isLoading){
+        return <FullPageLoading/>
+    }
+    
+    if(isError){
+        return <FullPageErrorFallback/>
+    }
+
     return (
         <AuthContext.Provider
             children={children}
-            value={{user,login,logout,isLoading}}
+            value={{user,login,logout}}
         />
     )
 }

@@ -10,6 +10,9 @@ import { useForm } from "antd/es/form/Form";
 import moment from "moment"
 import { useMenu } from "../context/menu-context";
 import { useDocumentTile } from "../utils/title";
+import hljs from 'highlight.js'
+import 'highlight.js/styles/monokai-sublime.css'
+import { ImageUpload } from "../components/ImageUpload";
 
 const {Option} = Select
 const {TextArea} = Input
@@ -44,6 +47,9 @@ function AddArticle(){
         breaks:false,
         smartLists:true,
         smartypants:false,
+        highlight:function(code){
+            return hljs.highlightAuto(code).value
+        }
     })
     useDocumentTile('添加文章',false)
     //修改Menu的状态
@@ -124,16 +130,22 @@ function AddArticle(){
                                 })}
                             </Select>
                         </Form.Item>
-                        <Form.Item label="发布时间" name="addTime" rules={[{required:true,message:'请选择发布时间'}]}>
-                            <DatePicker placeholder="请选择日期"/>
-                        </Form.Item>
-                        <Form.Item>
-                            <div style={{display:"flex", justifyContent:"center"}}>
-                                {params.id==''?
-                                <Button type="primary" htmlType="submit">发布文章</Button>
-                                :<Button type="primary" danger htmlType="submit">修改文章</Button>}
-                            </div>
-                        </Form.Item>                
+                        <Row gutter={24}>
+                            <Col span={12}>
+                                 <Form.Item label="发布时间" name="addTime" rules={[{required:true,message:'请选择发布时间'}]}>
+                                    <DatePicker placeholder="请选择日期"/>
+                                </Form.Item>
+                                <Form.Item>
+                                    {params.id==''?
+                                    <Button type="primary" htmlType="submit">发布文章</Button>
+                                    :<Button type="primary" danger htmlType="submit">修改文章</Button>}
+                                </Form.Item>       
+                            </Col>
+                            <Col span={12}>
+                                <ImageUpload/>
+                            </Col>
+                        </Row>
+                                
                     </Col>
                     <Col span={12}>
                         <Tabs defaultActiveKey="1" centered tabPosition="right">

@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^13.5.0",
     "antd": "^4.19.5",
     "axios": "^0.26.1",
+    "highlight.js": "^11.5.0",
     "marked": "^4.0.12",
     "monent": "^0.0.2-security",
     "react": "^18.0.0",
