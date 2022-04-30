@@ -7,7 +7,7 @@ function Main(){
         <Router>
             <Routes>
                 <Route path={"/index/*"} element={<AdminIndex/>}/>
-                <Route path={"/"} element={<Navigate to={"/index"} />} />
+                <Route path={"/"} element={<Navigate to={"/index/add"} />} />
             </Routes>
         </Router>   
     )

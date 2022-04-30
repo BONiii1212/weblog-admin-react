@@ -8,7 +8,7 @@ function App() {
   const {user} = useAuth()
   return (
     <div className="App">
-      {user?<Main/>:<Login/>}
+      {user?.token?<Main/>:<Login/>}
     </div>
   );
 }

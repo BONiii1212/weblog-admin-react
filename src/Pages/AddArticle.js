@@ -142,7 +142,7 @@ function AddArticle(){
                                 </Form.Item>       
                             </Col>
                             <Col span={12}>
-                                <ImageUpload/>
+                                {/* <ImageUpload/> */}
                             </Col>
                         </Row>
                                 

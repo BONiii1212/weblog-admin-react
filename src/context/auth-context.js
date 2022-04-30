@@ -31,7 +31,10 @@ export const AuthProvider = ({children}) => {
         setData:setUser
     } = useAsync()
 
-    const login = (data)=> auth.login(data).then(user=>setUser(user))
+    const login = (data)=> auth.login(data).then(user=>{
+        setUser(user)
+        return user
+    })
     const logout = () => auth.logout().then(()=>setUser(null))
 
     useEffect(()=>{

@@ -24,9 +24,9 @@ const AdminIndex = function(){
         <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
           <div className="logo" />
           <Menu theme="dark" onOpenChange={(value)=>changeOpen(value)} onSelect={(obj)=>changeSelect(obj.selectedKeys)} openKeys={openKeys} selectedKeys={selectedKeys} mode="inline">
-            <Menu.Item key="1">
+            {/* <Menu.Item key="1">
               <PieChartOutlined /><span><Link to={"/index"}></Link>数据可视化</span>
-            </Menu.Item>
+            </Menu.Item> */}
             <SubMenu key="sub1" title={<span><UserOutlined /><span>文章管理</span></span>}>
               <Menu.Item key="2"><Link to={"add"}>添加文章</Link></Menu.Item>
               <Menu.Item key="3"><Link to={"list"}>文章列表</Link></Menu.Item>

@@ -1,6 +1,5 @@
 import React , {useState} from 'react';
 import 'antd/dist/antd.css';
-import {useNavigate} from "react-router-dom";
 import { Card,Spin,message,Form,Input, Button } from 'antd';
 import '../static/css/Login.css';
 import { useAuth } from '../context/auth-context';
@@ -12,7 +11,12 @@ function Login(){
     useDocumentTile('登录',false)
     const checkLogin = (data)=>{
         setIsLoading(true)
-        login(data).then(res=>setIsLoading(false))
+        login(data).then(res=>{
+            if(res.data == "登录失败"){
+                message.error('登录失败');
+            }
+            setIsLoading(false)
+        })
     }
 
     return(
