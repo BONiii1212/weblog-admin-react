@@ -76,6 +76,7 @@ function AddArticle(){
     }
     //如果是修改模式的话，进来先加载数据
     useEffect(()=>{
+        form.resetFields()
         if(params.id!=''){
             //获取文章详细信息
             getArticleDetails(params.id).then(data=>{
