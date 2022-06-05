@@ -11,6 +11,7 @@
     "axios": "^0.26.1",
     "highlight.js": "^11.5.0",
     "marked": "^4.0.12",
+    "moment": "^2.29.3",
     "monent": "^0.0.2-security",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
